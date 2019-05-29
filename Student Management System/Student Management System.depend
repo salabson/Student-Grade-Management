@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1559070756 source:c:\users\hp\desktop\c++\student management system\main.cpp
+1559072777 source:c:\users\hp\desktop\c++\student management system\main.cpp
 	<iostream>
 	<string>
-	<ios>
 	<iomanip>
 	<vector>
+	<algorithm>
 
