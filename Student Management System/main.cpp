@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+
 double compute_final_grade(double midterm, double final_grade, double median ){
     return 0.2*midterm + 0.4*final_grade + 0.4*median;
 }
@@ -32,6 +34,9 @@ double compute_median(vector<double> vec){
 
 }
 
+//compute student's overall grade from midterm and final exam grades
+// vector of homework grades
+// this function does not copy its arguments, because median does so for us
 double compute_final_grade(double midterm, double final_grade, const vector<double>& homework){
      if(homework.size() == 0){
     throw domain_error("Student has no homework");
@@ -75,19 +80,23 @@ int main()
   // ask for Homework grades
   cout << "Enter all your homework grades" << endl;
 
-
+  // Read the homework grades
   vector<double> homework_grades;
-
-  if(read_homework(cin,homework_grades))
-
+  read_homework(cin,homework_grades);
 
 
-
-   double median = compute_median(homework_grades);
-  // compute and write final grade
+   try {
+        // compute and write final grade
+   double overall_grade = compute_final_grade(midterm_grade,final_grade,homework_grades);
    streamsize prec = cout.precision();
    cout << "Your final grade is " << setprecision(3)
-        << compute_final_grade(midterm_grade,final_grade,homework_grades)
+        << overall_grade
          << setprecision(prec) << endl;
+
+   }catch (domain_error){
+     cout << "You must enter home grades. Please try again" << endl;
+     return 1;
+   }
+
     return 0;
 }
