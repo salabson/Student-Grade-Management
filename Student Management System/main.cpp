@@ -13,16 +13,15 @@ double compute_final_grade(double midterm, double final_grade, double median ){
 }
 
 double compute_median(vector<double> vec){
-    // check that student enter some homework grade
+    // check that student enter some homework grade(s)
    typedef vector<double>::size_type vec_size;
     vec_size size = vec.size();
-   if(size == 0){
+   if(size == 0)
     throw domain_error("Median of the vector is empty");
-  }
 
 
 
-    // sort the grades
+    // sort the homework grades
   sort(vec.begin(), vec.end());
 
   // compute median of homework grades
@@ -33,7 +32,31 @@ double compute_median(vector<double> vec){
 
 }
 
+double compute_final_grade(double midterm, double final_grade, const vector<double>& homework){
+     if(homework.size() == 0){
+    throw domain_error("Student has no homework");
+  }
+    return compute_final_grade(midterm, final_grade, compute_median(homework));
+}
+//Read homework from input stream into homework vector
+istream& read_homework(istream& in, vector<double>& homework){
 
+  if(in){
+    // Clear the previous content
+    homework.clear();
+
+   // read homework grades into vector
+   double homework_grade;
+   while(cin >> homework_grade)
+      homework.push_back(homework_grade);
+
+
+   // Clear the stream so that input will work for next student
+   in.clear();
+  }
+
+   return in;
+}
 
 
 int main()
@@ -52,13 +75,11 @@ int main()
   // ask for Homework grades
   cout << "Enter all your homework grades" << endl;
 
-  double homework_grade;
+
   vector<double> homework_grades;
 
-  // read homework grades into vector
-  while(cin >> homework_grade){
-   homework_grades.push_back(homework_grade);
-   }
+  if(read_homework(cin,homework_grades))
+
 
 
 
@@ -66,7 +87,7 @@ int main()
   // compute and write final grade
    streamsize prec = cout.precision();
    cout << "Your final grade is " << setprecision(3)
-        << compute_final_grade(midterm_grade,final_grade,median)
+        << compute_final_grade(midterm_grade,final_grade,homework_grades)
          << setprecision(prec) << endl;
     return 0;
 }
