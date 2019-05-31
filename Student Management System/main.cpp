@@ -5,7 +5,8 @@
 #include<vector>
 #include<algorithm>
 #include<stdexcept>
-#include "median.h"
+#include"grade.h"
+
 
 using std::vector;
 using std::domain_error;
@@ -18,64 +19,6 @@ using std::string;
 using std::endl;
 using std::max;
 using std::istream;
-
-struct student_info{
-    string name;
-    double midterm_grade, final_grade;
-    vector<double> homework;
-};
-
-double compute_final_grade(double midterm, double final_grade, double median ){
-    return 0.2*midterm + 0.4*final_grade + 0.4*median;
-}
-
-
-
-//compute student's overall grade from midterm and final exam grades
-// vector of homework grades
-// this function does not copy its arguments, because median does so for us
-double compute_final_grade(const student_info& s){
-     if(s.homework.size() == 0){
-    throw domain_error("Student has no homework");
-  }
-    return compute_final_grade(s.midterm_grade, s.final_grade, compute_median(s.homework));
-}
-//Read homework from input stream into homework vector
-istream& read_homework(istream& in, vector<double>& homework){
-
-  if(in){
-    // Clear the previous content
-    homework.clear();
-   // read homework grades into vector
-   double homework_grade;
-   while(in >> homework_grade)
-      homework.push_back(homework_grade);
-
-
-   // Clear the stream so that input will work for next student
-   in.clear();
-  }
-
-   return in;
-}
-
-istream& read_student_info(istream& in, student_info& s){
-    // Read and store student's name, midterm and final grades
-    cout << "Enter student's name, midterm and final grades" << endl;
-    in >> s.name >> s.midterm_grade >> s.final_grade;
-
-    // Read and store all homework grades into a vector
-    cout << "Enter student's homework grades" << endl;
-    read_homework( in, s.homework);
-
-    return in;
-
-}
-
-bool compare (const student_info& x, const student_info& y ){
-    return x.name < y.name;
-}
-
 
 int main()
 {
@@ -103,11 +46,14 @@ int main()
   vector<student_info> students;
   student_info student;
 
+  // this fill the student vector with student data
   while(read_student_info(cin,student))
         students.push_back(student);
 
+ // sort the students by name
   sort(students.begin(), students.end(), compare);
 
+  // access each student data the compute his overall grade and print it along with his name
   for(vector<student_info>::size_type i=0; i!=students.size(); i++ ){
     try {
         cout << students[i].name << " ";

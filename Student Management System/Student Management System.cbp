@@ -32,9 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="grade.cpp" />
+		<Unit filename="grade.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="median.cpp" />
 		<Unit filename="median.h" />
+		<Unit filename="student_info.cpp" />
+		<Unit filename="student_info.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
