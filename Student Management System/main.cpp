@@ -50,8 +50,11 @@ int main()
   while(read_student_info(cin,student))
         students.push_back(student);
 
+
  // sort the students by name
   sort(students.begin(), students.end(), compare);
+
+  vector<student_info>sts = extract_student_fails(students);
 
   // access each student data the compute his overall grade and print it along with his name
   for(vector<student_info>::size_type i=0; i!=students.size(); i++ ){
@@ -59,11 +62,18 @@ int main()
         cout << students[i].name << " ";
         // compute and write final grade
    double overall_grade = compute_final_grade(students[i]);
+
+   //Get the student pass remark
+   string remark;
+   fgrage(students[i])==true ? remark ="Fail":remark ="Pass";
+
+
+
    streamsize prec = cout.precision();
    cout << "Your final grade is " << setprecision(3)
         << overall_grade
-         << setprecision(prec) << endl;
-
+         << setprecision(prec) << " "
+         << remark << endl;
    }catch (domain_error e){
      cout << e.what();
      return 1;
@@ -72,6 +82,30 @@ int main()
   }
 
 
+
+for(vector<student_info>::size_type i=0; i!=sts.size(); i++ ){
+    try {
+        cout << sts[i].name << " ";
+        // compute and write final grade
+   double overall_grade = compute_final_grade(sts[i]);
+
+   //Get the student pass remark
+   string remark;
+   fgrage(sts[i])==true ? remark ="Fail":remark ="Pass";
+
+
+
+   streamsize prec = cout.precision();
+   cout << "Your final grade is " << setprecision(3)
+        << overall_grade
+         << setprecision(prec) << " "
+         << remark << endl;
+   }catch (domain_error e){
+     cout << e.what();
+     return 1;
+   }
+    cout << endl;
+  }
 
 
     return 0;
