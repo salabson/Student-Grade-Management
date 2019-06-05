@@ -54,6 +54,14 @@ int main()
  // sort the students by name
   sort(students.begin(), students.end(), compare);
 
+   vector<student_info> did;
+   vector<student_info> didnt;
+   extract_student_do_all_homework(students, did, didnt);
+   if(did.empty())
+    cout << "No student did all his home work" << endl;
+   if(didnt.empty())
+    cout << "All students did all his home work" << endl;
+
   vector<student_info>sts = extract_student_fails(students);
 
   // access each student data the compute his overall grade and print it along with his name
@@ -106,6 +114,8 @@ for(vector<student_info>::size_type i=0; i!=sts.size(); i++ ){
    }
     cout << endl;
   }
+
+
 
 
     return 0;

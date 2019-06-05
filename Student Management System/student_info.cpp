@@ -41,4 +41,10 @@ bool compare (const student_info& x, const student_info& y ){
     return x.name < y.name;
 }
 
+// check if student do all homework
+bool do_all_homework(const student_info& st){
+   return (find(st.homework.begin(), st.homework.end(), 0)== st.homework.end());
+}
+
+
 

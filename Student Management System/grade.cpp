@@ -1,6 +1,7 @@
 #include "grade.h"
 using std::domain_error;
 using std::vector;
+using std:: find;
 
 double compute_final_grade(double midterm, double final_grade, double median ){
     return 0.2*midterm + 0.4*final_grade + 0.4*median;
@@ -78,5 +79,19 @@ vector<student_info> extract_student_fails(vector<student_info>& students){
     }
 
     return fail;
+}
+
+void extract_student_do_all_homework(const vector<student_info>& sts, vector<student_info>& s1, vector<student_info>& s2){
+    vector<student_info>::size_type i =0;
+
+    while(i!= sts.size()){
+        if(do_all_homework(sts[i]))
+            s1.push_back(sts[i]);
+        else
+            s2.push_back(sts[i]);
+        i++;
+    }
+
+
 }
 
