@@ -1,7 +1,11 @@
 #include "grade.h"
+
 using std::domain_error;
 using std::vector;
 using std:: find;
+using std::ostream;
+using std::string;
+using std:: endl;
 
 double compute_final_grade(double midterm, double final_grade, double median ){
     return 0.2*midterm + 0.4*final_grade + 0.4*median;
@@ -19,9 +23,36 @@ double compute_final_grade(const student_info& s){
     return compute_final_grade(s.midterm_grade, s.final_grade, compute_median(s.homework));
 }
 
+// We create this function to solve problem of overloaded function when calculating transform in media analysis
+double compute_final_grade_aux(const student_info& s){
+    try{
+        return compute_final_grade(s);
+    }catch(domain_error){
+        return compute_final_grade(s.midterm_grade, s.final_grade, 0);
+    }
+}
+
 // predicate to determine whether a student fail
 bool fgrage(const student_info& s){
     return compute_final_grade(s) < 60;
+}
+
+// Median analysis for all students final grades
+double median_analysis(const vector<student_info>& students){
+    vector<double> grades;
+    // calculate final grades for each student using compute final grade function and append to grades vector
+    transform(students.begin(), students.end(), back_inserter(grades), compute_final_grade_aux);
+   // calculate median of the grades vector and return it
+    return compute_median(grades);
+}
+
+
+void write_analysis(ostream& out, const string& name, double analysis(const vector<student_info>&),
+                    const vector<student_info>& did, const vector<student_info>& didnt)
+{
+    out << name << ": median(did) = " << analysis(did)
+                << ": median(didnt = ) " << analysis(didnt) << endl;
+
 }
 
 /**

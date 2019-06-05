@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1559742185 source:c:\users\hp\desktop\c++\student management system\main.cpp
+1559760326 source:c:\users\hp\desktop\c++\student management system\main.cpp
 	<iostream>
 	<string>
 	<ios>
@@ -9,7 +9,7 @@
 	<stdexcept>
 	"grade.h"
 
-1559243606 source:c:\users\hp\desktop\c++\student management system\median.cpp
+1559757456 source:c:\users\hp\desktop\c++\student management system\median.cpp
 	<vector>
 	<algorithm>
 	<stdexcept>
@@ -26,12 +26,14 @@
 1559740333 source:c:\users\hp\desktop\c++\student management system\student_info.cpp
 	"student_info.h"
 
-1559742418 source:c:\users\hp\desktop\c++\student management system\grade.cpp
+1559759947 source:c:\users\hp\desktop\c++\student management system\grade.cpp
 	"grade.h"
 
-1559741933 c:\users\hp\desktop\c++\student management system\grade.h
+1559759484 c:\users\hp\desktop\c++\student management system\grade.h
 	<stdexcept>
 	<vector>
+	<string>
+	<iostream>
 	"student_info.h"
 	"median.h"
 

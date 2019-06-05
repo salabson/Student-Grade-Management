@@ -62,6 +62,9 @@ int main()
    if(didnt.empty())
     cout << "All students did all his home work" << endl;
 
+      // do the analyses
+      write_analysis(cout, "Median", median_analysis, did, didnt);
+
   vector<student_info>sts = extract_student_fails(students);
 
   // access each student data the compute his overall grade and print it along with his name
@@ -88,6 +91,9 @@ int main()
    }
     cout << endl;
   }
+
+
+
 
 
 
