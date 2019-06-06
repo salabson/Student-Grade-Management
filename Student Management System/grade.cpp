@@ -22,6 +22,23 @@ double compute_final_grade(const student_info& s){
   }
     return compute_final_grade(s.midterm_grade, s.final_grade, compute_median(s.homework));
 }
+double compute_average(const vector<double>& vec){
+    return accumulate(vec.begin(), vec.end(), 0.0)/vec.size();
+}
+double compute_average_grade(const student_info& s){
+    return compute_final_grade(s.midterm_grade, s.final_grade, compute_average(s.homework));
+}
+
+// median of nonzero elements of homework or 0 if all homework are zero;
+double compute_optimistic_median(const student_info& s){
+    vector<double> nonzero;
+    remove_copy(s.homework.begin(), s.homework.end(), back_inserter(nonzero),0);
+
+    if(nonzero.empty())
+       return compute_final_grade(s.midterm_grade, s.final_grade, 0);
+    else
+        return compute_final_grade(s.midterm_grade, s.final_grade, compute_median(nonzero));
+}
 
 // We create this function to solve problem of overloaded function when calculating transform in media analysis
 double compute_final_grade_aux(const student_info& s){
@@ -46,14 +63,32 @@ double median_analysis(const vector<student_info>& students){
     return compute_median(grades);
 }
 
+double optimistic_median_analysis(const vector<student_info>& students){
+    vector<double> grades;
+    // calculate final grades for each student using compute final grade function and append to grades vector
+    transform(students.begin(), students.end(), back_inserter(grades), compute_optimistic_median);
+   // calculate median of the grades vector and return it
+    return compute_median(grades);
+}
+
+// Median analysis for all students final grades
+double average_analysis(const vector<student_info>& students){
+    vector<double> grades;
+    // calculate final grades for each student using compute final grade function and append to grades vector
+    transform(students.begin(), students.end(), back_inserter(grades), compute_average_grade);
+   // calculate median of the grades vector and return it
+    return compute_median(grades);
+}
+
 
 void write_analysis(ostream& out, const string& name, double analysis(const vector<student_info>&),
                     const vector<student_info>& did, const vector<student_info>& didnt)
 {
-    out << name << ": median(did) = " << analysis(did)
-                << ": median(didnt = ) " << analysis(didnt) << endl;
-
+    out << name <<":" << name <<"(did) = " << analysis(did)
+                << ":" << name <<"(didnt = ) " << analysis(didnt) << endl;
 }
+
+
 
 /**
 // Separating passing and failing student records: first try

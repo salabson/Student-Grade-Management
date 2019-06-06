@@ -64,6 +64,9 @@ int main()
 
       // do the analyses
       write_analysis(cout, "Median", median_analysis, did, didnt);
+      write_analysis(cout, "Average", average_analysis, did, didnt);
+      write_analysis(cout, "Optimist median", optimistic_median_analysis, did, didnt);
+
 
   vector<student_info>sts = extract_student_fails(students);
 
