@@ -8,6 +8,7 @@ using std::string;
 using std:: endl;
 
 double compute_final_grade(double midterm, double final_grade, double median ){
+
     return 0.2*midterm + 0.4*final_grade + 0.4*median;
 }
 
@@ -22,6 +23,7 @@ double compute_final_grade(const student_info& s){
   }
     return compute_final_grade(s.midterm_grade, s.final_grade, compute_median(s.homework));
 }
+
 double compute_average(const vector<double>& vec){
     return accumulate(vec.begin(), vec.end(), 0.0)/vec.size();
 }
@@ -52,6 +54,11 @@ double compute_final_grade_aux(const student_info& s){
 // predicate to determine whether a student fail
 bool fgrage(const student_info& s){
     return compute_final_grade(s) < 60;
+}
+
+// predicate to determine whether a student pass
+bool pgrage(const student_info& s){
+    return !fgrage(s);
 }
 
 // Median analysis for all students final grades
@@ -146,6 +153,40 @@ vector<student_info> extract_student_fails(vector<student_info>& students){
 
     return fail;
 }
+
+// Two pass solution using algorithm
+vector<student_info> extract_fails(vector<student_info>& students){
+
+    vector<student_info> fail;
+    // remove the passing students from the students vector,
+    // remaining the failing  student then copy them to fail vector
+    remove_copy_if(students.begin(), students.end(),back_inserter(fail), pgrage);
+    // We erase the failing students from students vector
+    vector<student_info>::iterator iter = remove_if(students.begin(), students.end(), fgrage);
+    students.erase(iter, students.end());
+
+
+    return fail;
+
+
+}
+
+
+// One pass solution using algorithm
+vector<student_info> extract_fails_2(vector<student_info>& students){
+
+    vector<student_info>::iterator  iter = stable_partition(students.begin(),students.end(),pgrage);
+    // remove the passing students from the students vector,
+    // remaining the failing  student then copy them to fail vector
+    vector<student_info> fail (iter, students.end());
+    // We erase the failing students from students vector
+    students.erase(iter, students.end());
+
+    return fail;
+
+}
+
+
 
 void extract_student_do_all_homework(const vector<student_info>& sts, vector<student_info>& s1, vector<student_info>& s2){
     vector<student_info>::size_type i =0;
